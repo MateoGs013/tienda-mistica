@@ -1,0 +1,9 @@
+# Entorno (credenciales reales)
+.env
+
+# Logs
+*.log
+
+# Cruft de SO / editor
+.DS_Store
+Thumbs.db

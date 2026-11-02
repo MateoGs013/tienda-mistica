@@ -1,0 +1,14 @@
+.git
+.gitignore
+.gitattributes
+.dockerignore
+Dockerfile
+docker-compose.yml
+.env
+.env.example
+README-deploy.md
+sql/
+docker/
+*.log
+.DS_Store
+Thumbs.db
