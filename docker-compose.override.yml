@@ -1,0 +1,11 @@
+# Override SOLO para desarrollo local: `docker compose up` lo fusiona
+# automaticamente con docker-compose.yml. Publica el puerto del contenedor en
+# el host para abrir http://localhost:8080.
+#
+# Coolify NO lo usa: despliega con `-f docker-compose.yml` (un solo archivo),
+# asi que en el VPS la app no publica puertos y Traefik la enruta por la red
+# interna del proyecto.
+services:
+  app:
+    ports:
+      - "${APP_PORT:-8080}:80"

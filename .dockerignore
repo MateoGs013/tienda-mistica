@@ -4,6 +4,7 @@
 .dockerignore
 Dockerfile
 docker-compose.yml
+docker-compose.override.yml
 .env
 .env.example
 README-deploy.md
