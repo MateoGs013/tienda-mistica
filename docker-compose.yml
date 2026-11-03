@@ -32,7 +32,7 @@ services:
       MARIADB_PASSWORD: ${DB_PASS:-cambia-esto}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-cambia-esto-root}
     volumes:
-      - dbdata:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
       # Import automático del esquema + datos en el PRIMER arranque (volumen vacío).
       - ./sql/tienda_mistica.sql:/docker-entrypoint-initdb.d/01-tienda.sql:ro
       # Producción: borra cuentas y datos personales de desarrollo tras el dump.
@@ -45,4 +45,4 @@ services:
 
 volumes:
   uploads:
-  dbdata:
+  mariadb_data:
