@@ -23,8 +23,12 @@ RUN echo 'ServerName localhost' > /etc/apache2/conf-available/servername.conf \
 
 WORKDIR /var/www/html
 
-# Código de la aplicación (sql/, Dockerfile, etc. quedan fuera por .dockerignore).
+# Código de la aplicación (el .env, Dockerfile y metadatos quedan fuera por .dockerignore).
 COPY --chown=www-data:www-data . /var/www/html
+
+# sql/ (el dump) y docker/ (initdb de la imagen de la DB) entran por el COPY
+# pero no deben servirse por HTTP: se quitan del árbol de Apache.
+RUN rm -rf /var/www/html/sql /var/www/html/docker
 
 # Copia pristina de uploads FUERA del árbol servido, para sembrar el volumen vacío.
 RUN mkdir -p /opt/uploads-seed \

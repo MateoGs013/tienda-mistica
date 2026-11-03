@@ -24,7 +24,12 @@ services:
       - "${APP_PORT:-8080}:80"
 
   db:
-    image: mariadb:11
+    # Imagen propia con el esquema + datos horneados (docker/db/Dockerfile),
+    # en vez de bind mounts del repo: en Coolify el origen relativo del bind
+    # podía resolverse como carpeta vacía y romper el import.
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
     restart: unless-stopped
     environment:
       MARIADB_DATABASE: ${DB_NAME:-tienda_mistica}
@@ -32,11 +37,9 @@ services:
       MARIADB_PASSWORD: ${DB_PASS:-cambia-esto}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-cambia-esto-root}
     volumes:
+      # El esquema + datos se importan en el PRIMER arranque, con este volumen
+      # vacío. Si quedó a medio inicializar, borrarlo para que initdb corra de nuevo.
       - mariadb_data:/var/lib/mysql
-      # Import automático del esquema + datos en el PRIMER arranque (volumen vacío).
-      - ./sql/tienda_mistica.sql:/docker-entrypoint-initdb.d/01-tienda.sql:ro
-      # Producción: borra cuentas y datos personales de desarrollo tras el dump.
-      - ./docker/initdb/20-prod-clean.sql:/docker-entrypoint-initdb.d/20-prod-clean.sql:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
