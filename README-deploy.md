@@ -36,8 +36,8 @@ La base se importa sola en el **primer** arranque (volumen vacío): el esquema y
 1. Nuevo recurso → **Docker Compose**, apuntando a este repo (rama `main`).
 2. Variables de entorno: `DB_NAME`, `DB_USER`, `DB_PASS`, `DB_ROOT_PASS`, `APP_BASE_PATH=/`.
 3. Dominio (p. ej. `tienda.mateogs.tech`) hacia el servicio **`app`**, puerto `80`. Traefik termina el SSL.
-4. Marcar como persistentes los volúmenes `mariadb_data` y `uploads`. No hacen falta bind mounts del repo ni "Preserve repository": el SQL va horneado en la imagen de la DB.
-5. Deploy. El esquema + datos se importan solos la **primera** vez, con `mariadb_data` vacío. Si un intento anterior dejó ese volumen a medio inicializar, borralo (o recreá la base) antes de redeployar para que el import vuelva a correr.
+4. Marcar como persistentes los volúmenes `mistica_db` y `uploads`. No hacen falta bind mounts del repo ni "Preserve repository": el SQL va horneado en la imagen de la DB.
+5. Deploy. El esquema + datos se importan solos la **primera** vez, con `mistica_db` vacío. Si un intento anterior dejó ese volumen a medio inicializar, borralo (o cambiá el nombre del volumen) antes de redeployar para que el import vuelva a correr.
 
 > Si preferís la base gestionada de Coolify en vez del servicio `db`, borrá el servicio `db` del compose y apuntá `DB_HOST`/`DB_PORT`/credenciales a esa base.
 

@@ -38,8 +38,9 @@ services:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-cambia-esto-root}
     volumes:
       # El esquema + datos se importan en el PRIMER arranque, con este volumen
-      # vacío. Si quedó a medio inicializar, borrarlo para que initdb corra de nuevo.
-      - mariadb_data:/var/lib/mysql
+      # vacío. Si quedó a medio inicializar, borrarlo (o cambiarle el nombre)
+      # para que initdb corra de nuevo.
+      - mistica_db:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
@@ -48,4 +49,4 @@ services:
 
 volumes:
   uploads:
-  mariadb_data:
+  mistica_db:
